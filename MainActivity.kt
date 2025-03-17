@@ -1,4 +1,4 @@
-package br.edu.fatecpg.calculoohm
+package br.edu.fatecpg.conversortemperatuda
 
 import android.os.Bundle
 import android.widget.Button
@@ -6,15 +6,13 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
+// Crie um App de conversão de temperatura:
+// tenha um campo de texto (EditText) para digitar uma temperatura em Celsius,
+// um botão que realize a conversão para Fahrenheit e um TextView para exibir o resultado
+// da conversão.
 
-// 2. Desenvolva um app Cálculo da primeira lei de Ohm. V = R*I
-//
-//Caso receba tensão e resistência calcular corrente
-//Caso receba tensão e corrente calcular resistência
-//Caso receba resistência e corrente calcular tensão
+//formula da conversão: F = C x 1,8 + 32
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,38 +20,31 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-        val corrente = findViewById<EditText>(R.id.edt_cor)
-        val tensao = findViewById<EditText>(R.id.edt_ten)
-        val resistencia = findViewById<EditText>(R.id.edt_res)
-        val result = findViewById<TextView>(R.id.txv_result)
-        val botao = findViewById<Button>(R.id.btn_calc)
+        val nm_temp = findViewById<EditText>(R.id.nm_temp)
+        val btn_converter = findViewById<Button>(R.id.btn_converter)
+        val txv_temp = findViewById<TextView>(R.id.txv_temp)
 
-        botao.setOnClickListener{
+        btn_converter.setOnClickListener{
 
-            val corrVal = corrente.text.toString().toDoubleOrNull()
-            val tenVal = tensao.text.toString().toDoubleOrNull()
-            val resVal = resistencia.text.toString().toDoubleOrNull()
+            val celsiusText = nm_temp.text.toString()
+            val celsius = celsiusText.toDoubleOrNull()
+            //conversão maldita...
 
-            if(corrVal != null && tenVal != null && resVal == null) {
-                // calculo de calcular resistencia
-                val resCal = tenVal / corrVal
-                result.text = "Resistencia: $resCal"
+            if(celsius != null) {
 
-            } else if (tenVal != null && resVal != null && corrVal == null) {
-                val corrCal = tenVal / resVal
-                result.text = "Corrente: $corrCal"
-                // calcular corrente
-
-            } else if(resVal != null && corrVal != null && tenVal == null) {
-                //calcular tensao
-                val tenCal = resVal * corrVal
-                result.text = "Tensão: $tenCal"
-
-            } else {
-                result.text = "Digitar somente dois valores"
+                val fahr = celsius * 1.8 + 32
+                txv_temp.text = "Temperatura em F° $fahr"
 
             }
+            else {
+                txv_temp.text = "Digita o valor..."
+            }
+
+
 
         }
+
+
+
     }
 }
